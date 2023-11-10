@@ -2,54 +2,11 @@
 import { ref } from 'vue';
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
-
+import configProps from './config/dialogGeneric.entity'
 const modal = ref(false);
-const props = defineProps({
-  data: {
-    type: Object,
-    required: true
-  },
-  visible: {
-    type: Boolean,
-    required: true
-  },
-  header:{
-    type: String,
-    required: false
-  },
-  onClick: {
-    type: Function,
-    required: false
-  },
-  onClose: {
-    type: Function,
-    required: false
-  },
-  breakpoints: {
-    type: Object,
-    required: false
-  },
-  customHeader:{
-    type:Boolean,
-    required:false
-  },
-  buttonLabel:{
-    type:String,
-    required:false
-  },
-  customFooter:{
-    type:Boolean,
-    required:false
-  },
-  style:{
-    type:Object,
-    required:false
-  },
-  modal:{
-    type:Boolean,
-    required:false
-  }
-})
+const props = defineProps(configProps)
+
+//configuracion inicial del componente
 const config = ref({
   data:[{
     field: 'name',
@@ -57,10 +14,14 @@ const config = ref({
     type: 'text',
   }],
   breakpoints:"{ '1199px': '75vw', '575px': '90vw' }",
+  onSuccess: () => {modal.value = false}
 })
+//onClick button
 const onClick = () => {
   modal.value = true;
 }
+//onclick success
+const onSuccess = props.data?.onSuccess || config.onSuccess
 console.log(props)
 </script>
 <template>
